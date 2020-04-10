@@ -2,8 +2,10 @@
 #include "Game.hpp"
 #include "TextureManager.hpp"
 #include "GameObject.hpp"
+#include "Map.hpp"
 
 GameObject* player;
+Map* map;
 SDL_Renderer* Game::renderer = nullptr;
 
 using namespace std;
@@ -12,7 +14,9 @@ Game::Game() {}
 Game::~Game() {}
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen) {
+    
     int flags = 0;
+    
     if (fullscreen) {
         flags = SDL_WINDOW_FULLSCREEN;
     }
@@ -32,15 +36,12 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
                 isRunning = true;
             } else {
                 isRunning = false;
-            }
-
-            
+            }   
         }
-
-        
     }
 
     player = new GameObject("assets/onewheel.png", 0, 0);
+    map = new Map();
 }
 
 void Game::handleEvents() {
@@ -60,10 +61,9 @@ void Game::update() {
 
 void Game::render() {
     SDL_RenderClear(renderer);
-    // add stuff to render
 
+    map->drawMap();
     player->render();
-
 
     SDL_RenderPresent(renderer);
 
