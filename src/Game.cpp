@@ -4,8 +4,7 @@
 #include "GameObject.hpp"
 
 GameObject* player;
-
-int cnt = 0;
+SDL_Renderer* Game::renderer = nullptr;
 
 using namespace std;
 
@@ -41,7 +40,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
         
     }
 
-    player = new GameObject("assets/onewheel.png", renderer, 0, 0);
+    player = new GameObject("assets/onewheel.png", 0, 0);
 }
 
 void Game::handleEvents() {
