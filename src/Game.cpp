@@ -1,9 +1,10 @@
 #include <iostream>
 #include "Game.hpp"
 #include "TextureManager.hpp"
+#include "GameObject.hpp"
 
-SDL_Texture* playerTex;
-SDL_Rect srcR, destR;
+GameObject* player;
+
 int cnt = 0;
 
 using namespace std;
@@ -40,7 +41,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
         
     }
 
-    playerTex = TextureManager::LoadTexture("assets/onewheel.png", renderer);
+    player = new GameObject("assets/onewheel.png", renderer, 0, 0);
 }
 
 void Game::handleEvents() {
@@ -55,19 +56,14 @@ void Game::handleEvents() {
     };
 }
 void Game::update() {
-    cnt++;
-    destR.h = 64;
-    destR.w = 64;
-
-    destR.x = cnt;
-
+   player->update();
 }
 
 void Game::render() {
     SDL_RenderClear(renderer);
     // add stuff to render
 
-    SDL_RenderCopy(renderer, playerTex, NULL, &destR);
+    player->render();
 
 
     SDL_RenderPresent(renderer);
