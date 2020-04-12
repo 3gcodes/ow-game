@@ -3,10 +3,15 @@
 #include "TextureManager.hpp"
 #include "GameObject.hpp"
 #include "Map.hpp"
+#include "ECH.hpp"
+#include "Components.hpp"
 
 GameObject* player;
 Map* map;
 SDL_Renderer* Game::renderer = nullptr;
+
+Manager manager;
+auto& newPlayer(manager.addEntity());
 
 using namespace std;
 
@@ -42,6 +47,9 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
     player = new GameObject("assets/onewheel.png", 0, 0);
     map = new Map();
+
+    newPlayer.addComponent<PositionComponent>();
+    newPlayer.getComponent<PositionComponent>().setPos(500, 500);
 }
 
 void Game::handleEvents() {
@@ -57,6 +65,9 @@ void Game::handleEvents() {
 }
 void Game::update() {
    player->update();
+   manager.update();
+   std::cout << newPlayer.getComponent<PositionComponent>().x() << ", " << 
+        newPlayer.getComponent<PositionComponent>().y() << std::endl;
 }
 
 void Game::render() {
